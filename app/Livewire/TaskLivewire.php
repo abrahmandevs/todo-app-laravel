@@ -74,7 +74,11 @@ class TaskLivewire extends Component
 
     // singel complete task
     function completed ($id){
-        $taskList= Task::where('id',$id)->where('status', 0)->update(['status' => 1]);
+        $taskList= Task::where('id',$id)->first();
+        $taskList->update([
+            'status'=> $taskList->status==0? 1:0,
+        ]);
+
         $this->allRest();
     }
 
