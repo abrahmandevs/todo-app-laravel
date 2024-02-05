@@ -70,7 +70,7 @@
                         </x-dropdown>
                     </div>
                 @endif
-
+                @if(auth()->check())
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
                     <x-dropdown align="right" width="48">
@@ -82,7 +82,7 @@
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth()->check()?Auth::user()->name:'' }}
 
                                         <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -122,6 +122,15 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+
+                @else
+                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-nav-link>
+                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-nav-link>
+                @endif
             </div>
 
             <!-- Hamburger -->
@@ -137,6 +146,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
+    @if(auth()->check())
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
@@ -216,4 +226,6 @@
             </div>
         </div>
     </div>
+
+    @endif
 </nav>

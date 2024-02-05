@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/',[App\Http\Controllers\TaskController::class,'index'])->name('index');
-Route::post('/create',[App\Http\Controllers\TaskController::class,'createTodo'])->name('create-todo');
-Route::post('/delete/{id}',[App\Http\Controllers\TaskController::class,'deleteTodo'])->name('delete-todo');
+Route::get('/',App\Livewire\TaskLivewire::class)->name('index');
+// Route::get('/',[App\Http\Controllers\TaskController::class,'index'])->name('index');
+// Route::post('/create',[App\Http\Controllers\TaskController::class,'createTodo'])->name('create-todo');
+// Route::post('/delete/{id}',[App\Http\Controllers\TaskController::class,'deleteTodo'])->name('delete-todo');
 
 Route::middleware([
     'auth:sanctum',
