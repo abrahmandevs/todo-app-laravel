@@ -19,8 +19,9 @@
             {{$test}}
             <div class="divide-y">
                 <div>
-                <div wire:key="defaultTab-{{uniqid()}}">
-                    @if('defaultTab' == $currentTab)
+                    <div wire:key="defaultTab-{{uniqid()}}">
+                        @if('defaultTab' == $currentTab)
+                        {{$currentTab}}
                         <div id="defaultTab">
                             @include('livewire.partial.task-list')
                         </div>
@@ -57,6 +58,7 @@
                     </div>
                     <button wire:click="clearCompletedTask" class="p-1 px-2 border rounded border-gray-400">Clear completed</button>
                 </div>
+                {{}}
             </div>
 
         </div>

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class TaskLivewire extends Component
 {
 
-    public $rows, $remaningTask;
+    public $rows, $remaningTask, $targetedData;
 
     // public $addTodo;
     public $currentTab='defaultTab';
@@ -73,13 +73,20 @@ class TaskLivewire extends Component
     }
 
     // singel complete task
-    function completed ($id){
+    function completed ($id,$tab){
         $taskList= Task::where('id',$id)->first();
         $taskList->update([
             'status'=> $taskList->status==0? 1:0,
         ]);
+        $this->test = $id .''. $tab;
+        // $this->allRest();
+        // $this->rows=
+        // $this->targetedData = $this->rows;
+        $this->mount();
 
-        $this->allRest();
+        $this->currentTab = $tab;
+        $this->test = $this->targetedData;
+
     }
 
     // check all complete task
@@ -91,12 +98,16 @@ class TaskLivewire extends Component
     // all complete task
     function allTask ($tab){
         $this->currentTab = $tab;
-        $this->rows = Task::orderBy('id','DESC')->get();
+        $this->rows = $this->targetedData= Task::orderBy('id','DESC')->get();
+        // $this->targetedData=$this->rows;
+        $this->allRest();
     }
     // all active task
     function activeTask ($tab){
+        $this->allRest();
         $this->currentTab = $tab;
-        $this->rows= Task::where('status', 0)->orderBy('id','DESC')->get();
+        $this->targetedData=  Task::where('status', 0)->orderBy('id','DESC')->get();
+        // $this->rows= $this->targetedData;
     }
 
     // all completed task
@@ -118,7 +129,8 @@ class TaskLivewire extends Component
 
     public function mount(){
         $this->rows = Task::orderBy('id','DESC')->get();
-        $this->remaningTask = $this->rows->where('status',0)->count();
+        $this->remaningTask = Task::where('status',0)->count();
+        $this->targetedData=$this->rows;
     }
 
     public function render()
